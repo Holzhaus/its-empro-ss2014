@@ -2,46 +2,62 @@
 #include <inttypes.h>
 
 //Geben Sie hier die ermittelten Offsets aus der ersten Übung an
-#define MOTOR_OFFSET_LINKS 0
-#define MOTOR_OFFSET_RECHTS 0
+#define MOTOR_OFFSET_LINKS 80
+#define MOTOR_OFFSET_RECHTS 65
 
 //Rufen Sie in dieser Funktion MotorSpeed() mit korrgierten Parametern auf
 //Ziel ist, dass ein Aufruf von bspw. MotorSpeedSet(100,100) den Asuro geradeaus fahren lässt
 void MotorSpeedSet(uint8_t left, uint8_t right)
 {
-	//ToDo
-
+	float l,r;
+	l = ((float)left/255)*(255-MOTOR_OFFSET_LINKS);
+	r = ((float)right/255)*(255-MOTOR_OFFSET_LINKS);
+	left = l + MOTOR_OFFSET_LINKS;
+	right = r + MOTOR_OFFSET_RECHTS;
+	MotorSpeed(left,right)
 }
 
 void DriveTriangle()
 {
-	//ToDo
-
+	int i;
+	MotorDir(FWD, FWD);
+	for(i=0; i<3; i++) {
+		// Fahren
+		MotorSpeedSet(100,100);
+		msleep(1000);
+		// Drehen
+		MotorSpeedSet(0,100);
+		msleep(1000);
+	Break();
 }
 
 void DriveRectangle()
 {
-	//ToDo
-
+	int i;
+	MotorDir(FWD, FWD);
+	for(i=0; i<4; i++) {
+		// Fahren
+		MotorSpeedSet(100,100);
+		msleep(1000);
+		// Drehen
+		MotorSpeedSet(0,100);
+		msleep(800);
+	Break();
 }
+
+void Break()
+	// kurz stehen bleiben
+	MotorDir(BREAK, BREAK);
+	MotorSpeed(255,255);
+	Msleep(500);
+	MotorSpeed(0,0);
 
 int main(void)
 {
 	//Asuro initialisieren
 	Init();
-
-	//ToDo: ein Dreieck und ein Rechteck fahren
-	//Hinweis: um den Asuro für eine gewisse Dauer warten zu lassen, verwenden Sie bitte die Funktion
-	//Msleep() aus der AsuroLib. Ein Aufruf von Msleep(1500) lässt den Asuro bspw. 1500ms warten
-	//bevor der nächste Befehl ausgeführt wird.
 	
 	DriveTriangle();
-	
-	// Zwischen den beiden Figuren kurz stehen bleiben
-	MotorDir(BREAK, BREAK);
-	MotorSpeed(255,255);
-	Msleep(500);
-	MotorSpeed(0,0);
 
 	DriveRectangle();
 
