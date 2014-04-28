@@ -3,19 +3,56 @@
 
 void TestAllLEDs(void)
 {
-	// ToDo: Lassen Sie alle LEDs hintereinander aufblinken. Nur eine LED soll pro Zeiteinheit aktiviert sein und für 750ms aufleuchten. 
-	// Reihenfolge:
-	// FrontLED
-	// BackLED links
-	// BackLED rechts
-	// StatusLED rot
-	// StatusLED grün
-	// StatusLED gelb
+	// Alle LEDs hintereinander aufblinken. Nur eine LED soll pro Zeiteinheit aktiviert sein und für 750ms aufleuchten. 
+	FrontLED(ON);
+	msleep(750);
+	FrontLED(OFF);
+	BackLED(ON, OFF);
+	msleep(750);
+	BackLED(OFF, ON);
+	msleep(750);
+	BackLED(OFF, OFF);
+	StatusLED(RED);
+	msleep(750);
+	StatusLED(GREEN);
+	msleep(750);
+	StatusLED(YELLOW);
+	msleep(750);
+	StatusLED(OFF)
 	
+}
+
+void allLEDs(bool on)
+{
+	if ( on )
+	{
+		FrontLED(ON);
+		BackLED(ON, ON);
+		StatusLED(RED);
+	}
+	else
+	{
+		FrontLED(OFF);
+		BackLED(OFF, OFF);
+		StatusLED(OFF);
+	}
+}
+#define DOT blink(true, timeslot)
+#define DASH blink(false, timeslot)
+
+void blink(bool dot,const int timeslot) {
+	allLEDs(true);
+	if ( dot )
+		msleep(timeslot);
+	else
+		msleep(3*timeslot)
+	allLEDs(false);
+	msleep(timeslot)
 }
 
 void sendSOS(const int timeslot)
 {
+	
 	// ToDo: Alle LEDs sollen in roter Farbe ein SOS-Signal in Morse-Code (. . . - - - . . .) aussenden.
 	// Im Morse-Code wird zwischen Punkten und Strichen unterschieden, die unterschiedlich lange dauern.
 	// Ein Punkt dauert eine Zeiteinheit, ein Strich dauert drei Zeiteinheiten.
@@ -24,7 +61,9 @@ void sendSOS(const int timeslot)
 	// S: . . . 
 	// O: - - -
 	// S: . . .
-	
+	DOT; DOT; DOT;
+	DASH; DASH; DASH;
+	DOT; DOT; DOT;	
 }
 
 int main(void)
