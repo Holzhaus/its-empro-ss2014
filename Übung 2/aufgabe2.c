@@ -5,26 +5,25 @@ void TestAllLEDs(void)
 {
 	// Alle LEDs hintereinander aufblinken. Nur eine LED soll pro Zeiteinheit aktiviert sein und für 750ms aufleuchten. 
 	FrontLED(ON);
-	msleep(750);
+	Msleep(750);
 	FrontLED(OFF);
 	BackLED(ON, OFF);
-	msleep(750);
+	Msleep(750);
 	BackLED(OFF, ON);
-	msleep(750);
+	Msleep(750);
 	BackLED(OFF, OFF);
 	StatusLED(RED);
-	msleep(750);
+	Msleep(750);
 	StatusLED(GREEN);
-	msleep(750);
+	Msleep(750);
 	StatusLED(YELLOW);
-	msleep(750);
-	StatusLED(OFF)
-	
+	Msleep(750);
+	StatusLED(OFF);
 }
 
-void allLEDs(bool on)
+void allLEDs(unsigned char status)
 {
-	if ( on )
+	if ( status == ON )
 	{
 		FrontLED(ON);
 		BackLED(ON, ON);
@@ -37,17 +36,17 @@ void allLEDs(bool on)
 		StatusLED(OFF);
 	}
 }
-#define DOT blink(true, timeslot)
-#define DASH blink(false, timeslot)
+#define DOT blink(1, timeslot)
+#define DASH blink(0, timeslot)
 
-void blink(bool dot,const int timeslot) {
-	allLEDs(true);
-	if ( dot )
-		msleep(timeslot);
+void blink(int status, const int timeslot) {
+	allLEDs(ON);
+	if ( status )
+		Msleep(timeslot);
 	else
-		msleep(3*timeslot)
-	allLEDs(false);
-	msleep(timeslot)
+		Msleep(3*timeslot);
+	allLEDs(OFF);
+	Msleep(timeslot);
 }
 
 void sendSOS(const int timeslot)

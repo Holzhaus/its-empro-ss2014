@@ -1,0 +1,58 @@
+#!/bin/sh
+
+# A POSIX variable
+OPTIND=1         # Reset in case getopts has been used previously in the shell.
+
+function show_help {
+	echo "./compile_and_flash [-f [-p SERIALPORT]] -u UEBUNG -a AUFGABE"
+	echo "    -f"
+	echo "       Flashe den ASURO nach dem Kompilieren mit asurocon"
+	echo "    -p SERIALPORT"
+	echo "       Benutze SERIALPORT zum Flashen (default: /dev/ttyS0)"
+}
+
+flash=0
+serialport="ttyS0"
+while getopts "h?u:a:fp:" opt; do
+    case "$opt" in
+    h|\?)
+        show_help
+        exit 0
+        ;;
+    v)  verbose=1
+        ;;
+    u)  uebung=$OPTARG
+        ;;
+    a)  aufgabe=$OPTARG
+        ;;
+    f)  flash=1
+        ;;
+    p)  serialport=$OPTARG
+	;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+[ "$1" = "--" ] && shift
+
+if [ -z $uebung ]; then
+	echo "-u UEBUNG nicht angegeben"
+	show_help
+	exit 1
+fi
+if [ -z $aufgabe ]; then
+	echo "-a AUFGABE nicht angegeben"
+	show_help
+	exit 2
+fi
+
+cd "Übung $uebung";
+make all TARGET="aufgabe$aufgabe";
+
+if [ $? -eq 0 ] && [ $flash -eq 1 ]; then
+	asuro-flashtool -$serialport aufgabe$aufgabe.hex
+fi
+
+cd ..
+exit $?

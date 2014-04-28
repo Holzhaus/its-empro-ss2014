@@ -14,43 +14,47 @@ void MotorSpeedSet(uint8_t left, uint8_t right)
 	r = ((float)right/255)*(255-MOTOR_OFFSET_LINKS);
 	left = l + MOTOR_OFFSET_LINKS;
 	right = r + MOTOR_OFFSET_RECHTS;
-	MotorSpeed(left,right)
+	MotorSpeed(left,right);
 }
 
-void DriveTriangle()
+void StopDriving(void)
+{
+	// kurz stehen bleiben
+	MotorDir(BREAK, BREAK);
+	MotorSpeed(255,255);
+	Msleep(500);
+	MotorSpeed(0,0);
+}
+
+void DriveTriangle(void)
 {
 	int i;
 	MotorDir(FWD, FWD);
 	for(i=0; i<3; i++) {
 		// Fahren
 		MotorSpeedSet(100,100);
-		msleep(1000);
+		Msleep(1000);
 		// Drehen
 		MotorSpeedSet(0,100);
-		msleep(1000);
-	Break();
+		Msleep(1000);
+	}
+	StopDriving();
 }
 
-void DriveRectangle()
+void DriveRectangle(void)
 {
 	int i;
 	MotorDir(FWD, FWD);
 	for(i=0; i<4; i++) {
 		// Fahren
 		MotorSpeedSet(100,100);
-		msleep(1000);
+		Msleep(1000);
 		// Drehen
 		MotorSpeedSet(0,100);
-		msleep(800);
-	Break();
+		Msleep(800);
+	}
+	StopDriving();
 }
-
-void Break()
-	// kurz stehen bleiben
-	MotorDir(BREAK, BREAK);
-	MotorSpeed(255,255);
-	Msleep(500);
-	MotorSpeed(0,0);
 
 int main(void)
 {
