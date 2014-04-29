@@ -47,12 +47,24 @@ if [ -z $aufgabe ]; then
 	exit 2
 fi
 
+OLDDIR=$(pwd)
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+cd "$DIR"
 cd "Übung $uebung";
+make clean
 make all TARGET="aufgabe$aufgabe";
+make clean_nohex
 
 if [ $? -eq 0 ] && [ $flash -eq 1 ]; then
-	asuro-flashtool -$serialport aufgabe$aufgabe.hex
+	asuro-flashtool -$serialport "aufgabe$aufgabe.hex"
 fi
 
-cd ..
+cd "$OLDDIR"
 exit $?
