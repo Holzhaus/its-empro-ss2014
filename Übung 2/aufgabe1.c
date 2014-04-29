@@ -35,6 +35,7 @@ void DriveTriangle(void)
 		MotorSpeedSet(100,100);
 		Msleep(1000);
 		// Drehen
+		MotorDir(BREAK,FWD);
 		MotorSpeedSet(0,100);
 		Msleep(1000);
 	}
@@ -56,14 +57,37 @@ void DriveRectangle(void)
 	StopDriving();
 }
 
+void blink(int i)
+{
+	int j;
+	for (j=0;j<i;j++) {
+		Msleep(500);
+		BackLED(ON,OFF);
+		Msleep(500);
+		BackLED(OFF,OFF);
+	}
+}
+
 int main(void)
 {
 	//Asuro initialisieren
 	Init();
-	
-	DriveTriangle();
 
-	DriveRectangle();
+	
+	MotorDir(FWD,FWD);
+	//MotorSpeed(80,65);
+	int i;
+	for(i=5; i<=10; i++) {
+		MotorSpeed(0,0);
+		Msleep(250);
+		blink(i);
+		MotorSpeed(i*10,70);
+		Msleep(2000);
+	}
+	
+	//DriveTriangle();
+
+	//DriveRectangle();
 
 	while(1);
 	return 0;

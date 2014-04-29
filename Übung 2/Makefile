@@ -256,6 +256,8 @@ extcoff: $(TARGET).elf
 
 
 # Target: clean project.
+clean_nohex: begin clean_list_nohex finished end
+
 clean: begin clean_list finished end
 
 clean_list :
@@ -274,6 +276,24 @@ clean_list :
 	$(REMOVE) $(LST)
 	$(REMOVE) $(SRC:.c=.s)
 	$(REMOVE) $(SRC:.c=.d)
+
+clean_list_nohex :
+	$(REMOVE) $(TARGET).eep
+	$(REMOVE) $(TARGET).obj
+	$(REMOVE) $(TARGET).cof
+	$(REMOVE) $(TARGET).elf
+	$(REMOVE) $(TARGET).map
+	$(REMOVE) $(TARGET).obj
+	$(REMOVE) $(TARGET).a90
+	$(REMOVE) $(TARGET).sym
+	$(REMOVE) $(TARGET).lnk
+	$(REMOVE) $(TARGET).lss
+	$(REMOVE) $(OBJ)
+	$(REMOVE) $(LST)
+	$(REMOVE) $(SRC:.c=.s)
+	$(REMOVE) $(SRC:.c=.d)
+
+flash: all clean_nohex
 
 
 # Automatically generate C source code dependencies. 
