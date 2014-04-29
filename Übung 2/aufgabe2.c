@@ -61,7 +61,9 @@ void sendSOS(const int timeslot)
 	// O: - - -
 	// S: . . .
 	DOT; DOT; DOT;
+	Msleep(2*timeslot);
 	DASH; DASH; DASH;
+	Msleep(2*timeslot);
 	DOT; DOT; DOT;	
 }
 
@@ -72,8 +74,14 @@ int main(void)
 
 	//Asuro initialisieren
 	Init();
+	// Zunächst sicherstellen, dass alle LEDs aus sind und kurz warten
+	allLEDs(OFF);
+
+	Msleep(1000);
 
 	TestAllLEDs();
+
+	Msleep(1000);
 
 	sendSOS(timeslot);
 
