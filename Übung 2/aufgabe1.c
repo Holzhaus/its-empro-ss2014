@@ -3,7 +3,7 @@
 
 //Geben Sie hier die ermittelten Offsets aus der ersten Übung an
 #define MOTOR_OFFSET_LINKS 80
-#define MOTOR_OFFSET_RECHTS 65
+#define MOTOR_OFFSET_RECHTS 75
 
 //Rufen Sie in dieser Funktion MotorSpeed() mit korrgierten Parametern auf
 //Ziel ist, dass ein Aufruf von bspw. MotorSpeedSet(100,100) den Asuro geradeaus fahren lässt
@@ -32,12 +32,13 @@ void DriveTriangle(void)
 	MotorDir(FWD, FWD);
 	for(i=0; i<3; i++) {
 		// Fahren
+		MotorDir(FWD,FWD);
 		MotorSpeedSet(100,100);
-		Msleep(1000);
+		Msleep(1500);
 		// Drehen
 		MotorDir(BREAK,FWD);
 		MotorSpeedSet(0,100);
-		Msleep(1000);
+		Msleep(800);
 	}
 	StopDriving();
 }
@@ -48,11 +49,13 @@ void DriveRectangle(void)
 	MotorDir(FWD, FWD);
 	for(i=0; i<4; i++) {
 		// Fahren
+		MotorDir(FWD,FWD);
 		MotorSpeedSet(100,100);
-		Msleep(1000);
+		Msleep(1500);
 		// Drehen
+		MotorDir(BREAK,FWD);
 		MotorSpeedSet(0,100);
-		Msleep(800);
+		Msleep(600);
 	}
 	StopDriving();
 }
@@ -73,21 +76,12 @@ int main(void)
 	//Asuro initialisieren
 	Init();
 
-	
-	MotorDir(FWD,FWD);
-	//MotorSpeed(80,65);
-	int i;
-	for(i=5; i<=10; i++) {
-		MotorSpeed(0,0);
-		Msleep(250);
-		blink(i);
-		MotorSpeed(i*10,70);
-		Msleep(2000);
-	}
-	
-	//DriveTriangle();
+	DriveTriangle();
 
-	//DriveRectangle();
+	// Mal Kurz chillen
+	Msleep(2000);
+
+	DriveRectangle();
 
 	while(1);
 	return 0;
