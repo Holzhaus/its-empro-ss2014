@@ -1,9 +1,8 @@
-SUB: subtrahiert ohne carry. Funktioniert -> SUB ard1, ard2. Dabei wird gerechnet ard1 = ard1-ard2.
-
-SUBI: subtrahiert mit Konstante. Funktioniert -> SUBI ard1, k. Dabei wird gerechnet ard1 = ard1-k.
-
-SBC: subtrahiert mit carry. Funktioniert -> SBC ard1, ard2. Dabei wird gerechnet ard1 = ard1 -ard2 - carry.
-
-SBCI: subtrahiert mit Konstante und carry. Funktioniert -> SBCI ard1, k. Dabei wird gerechnet ard1 = ard1 - k - carry.
-
-SBIW: subtrahiert einen Wert (0-63) von einem Registerpaar und speichert das Ergebnis in diesen Registern. Dabei wird gerechnet R2:R1 = R2:R1-Wert.
+```
+Befehl	Übertrag?	Konstante?	Aufruf		Rechnung		Beschreibung
+SUB					SUB Rd, Rr	Rd = Rd - Rr		Subtrahiert Register Rr von Register Rd und speichert das Ergebnis in Rd.
+SUBI			0-255		SUBI Rd, K	Rd = Rd - K		Subtrahiert eine 8-Bit-Konstante von Register Rd und speichert das Ergebnis in Rd.
+SBC	X				SBC Rd, Rr	Rd = Rd - Rr - Übertrag	Subtrahiert Register Rr und den Übertrag von Register Rd und speichert das Ergebnis in Rd.
+SBCI	X		0-255		SBCI Rd, K	Rd = Rd - K - Übertrag	Subtrahiert eine 8-Bit-Konstante und den Übertrag von Register Rd und speichert das Ergebnis in Rd.
+SBIW			0-63		SBIW Rdl, K	Rdh:Rdl = Rdh:Rdl - K	Subtrahiert eine 6-Bit-Konstante von einer 16-Bit-Zahl (Register Rdh und Rdl bilden zusammen die 16-Bit)
+```
