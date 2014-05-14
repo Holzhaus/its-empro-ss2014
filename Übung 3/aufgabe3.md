@@ -1,1 +1,1 @@
-Bei ANDI muss man beachten, dass man nur die Register 16 bis 31 nutzen kann, da für die Konstante k eine 8Bit Zahl reserviert sind.
+ANDI kann nur die Register 16 bis 31 nutzen, weil Konstanten nicht direkt in die unteren Register geladen werden können.
