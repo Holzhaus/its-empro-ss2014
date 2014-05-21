@@ -19,7 +19,7 @@ B = n/A
 #### Vorzeichenbehaftete ganze Zahl
 ```
 A = n/A
-B = 11011100
+B = 10100100
 ```
 `A` ist nicht darstellbar, da es außerhalb des darstellbaren Wertebereichs liegt (`A > 127`).
 
