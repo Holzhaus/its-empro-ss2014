@@ -1,0 +1,12 @@
+\begin{align*}
+f(n,m) &= \begin{cases}
+               0               & \mbox{wenn } n+m < 256\\
+               256             & \mbox{wenn } n+m \geq 256
+           \end{cases}\\
+     x &= \left \lfloor\frac{\left\lfloor\frac{a \cdot b+c-f(a\cdot b,c)+f(a\cdot b,c)}{2} \right\rfloor}{2} \right\rfloor\\
+       &= \left\lfloor\frac{a \cdot b+c}{4} \right\rfloor\\
+\text{mit}\\
+     a &= \mathtt{r16}\text{ (Register 16)}\\
+     b &= \mathtt{r17}\text{ (Register 17)}\\
+     c &= \mathtt{r18}\text{ (Register 18)}\\
+\end{align*}
