@@ -1,0 +1,38 @@
+a)
+Minifloat 1.4.3.7: (angefangen beim MSB)
+-Die "1" zeigt an, dass 1 Bit für das Vorzeichen steht
+-Die "4" zeigt an, dass 4 Bit für den Exponenten reserviert sind.
+-Die "3" zeigt an, dass 3 Bit für die Mantisse sind.
+-Die "7" steht für den Bias.
+
+b)
+8 Bit Minifloat:
+A = 2.75
+
+0	0		0		1		0		1		1		0
+VZ  2^3		2^2		2^1		2^0		1/2		1/4		1/8
+
+=> 0001 0110
+
+B = 4.5
+
+0	0		1		0		0		1		0		0
+VZ  2^3		2^2		2^1		2^0		1/2		1/4		1/8
+
+=> 0010 0100
+
+c)
+A = 2.75
+=> (-1)^0 x 1.110 x 2^(2-7)
+
+B = 4.5
+=> (-1)^0 x 1.100 x 2^(4-7)
+
+d)
+	0001 0110
++	0010 0100
+-------------
+	0011 1010
+	
+=>  7.25
+Das Ergebnis ist genau, da kein Rundunsfehler entstanden ist.

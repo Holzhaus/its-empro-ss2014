@@ -1,0 +1,20 @@
+a)
+bei 16 Bit: -32768 bis +32767
+
+b)
+Der Vorteil liegt nicht nur darin, dass man keine negative Null hat und noch eine Zahl mehr darstellen kann, sonst vorallem darin, dass die ALU wie mit positiven Zahlen rechnen kann.
+
+c)
+7	:			00111
+
+14	:			01110
+invertieren:	10001
++1		   :+	00001
+---------------------
+-14		   :	10010
+
+=>				00111
+			   +10010
+			   ------
+			    11001		=> -7
+Es werden für die Darstellung 5 Bit benötigt, da 14 eine 4 Bit Zahl ist.
