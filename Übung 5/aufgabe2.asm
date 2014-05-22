@@ -35,20 +35,13 @@ ldi B_low, 0x15
 ; Versuchen Sie moeglichst nah an diese Vorgabe zu gelangen.
 
 calculate:
-; Da beide Zahlen maximal 0xFFFFFFFF sein können, werden sie zunächst durch 2 geteilt, um einen Überlauf
-; zu verhinden (sie können nach der Addition dann maximal wieder 0xFFFFFFFF werden, aber nicht größer)
-; Das Ergebnis der Addition wird zum Schluss nochmal durch 2 geteilt (dies ist effizienter, da so nur
-; 2 Register betroffen sind (im Gegensatz zu 4 Registern, wenn bereits am Anfang 2 Mal durch 2 geteilt würde.
-; Rechnerisch: (A+B)/4 = (A/4)+(B/4) = ((A/2)+(B/2))/2
 ;
-; Werte durch 2 teilen (mittels Leftshift)
-lsr A_high		; Leftshift (MSB wird zu 0, Carry-Flag gesetzt)
-ror A_low               ; Leftshift (MSB wird zu Carry)
-lsr B_high
-ror B_low
 ; A und B addieren
 add  A_low, B_low       ; Normale Addition für niedrige Bits
 adc  A_high, B_high     ; Addition mit Carry für hohe Bits
+; Werte durch 2 teilen (mittels Leftshift)
+ror A_high		; Verwende ROR, um Carry von vorhergehender Addition zu beachten
+ror A_low
 ; Das Ergebnis nochmal durch 2 teilen
 lsr A_high
 ror A_low
