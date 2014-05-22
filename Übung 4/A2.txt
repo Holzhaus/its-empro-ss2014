@@ -1,0 +1,25 @@
+A = 207, B = -36
+
+a)
+Vorzeichenlos:
+A = 207 =: 11001111
+B = 36 =: 00100100
+
+b)
+Vorzeichenbehaftete ganze Zahl:
+A = +207 =: [0]11001111		Funktioniert nicht, da 8 Bit für die Darstellung nicht ausreichen.
+B =  -36 =: 10100100
+
+c)
+Ganze Zahl im Einerkomplement:
+A = +207 =: Funktioniert nicht, da 9 Bit für die Darstellung im EK benötigt werden.
+B = -36 =: 11011011
+
+d)
+Ganze Zahl im Zweierkomplement:
+A = +207 =: Funktioniert wieder nicht, da 9 Bit für die Darstellung benötigt werden.
+B = -36 =:		00100100	(36)
+B invertiert:	11011011
++1			:  +00000001
+				--------
+				11011100	=> -36
