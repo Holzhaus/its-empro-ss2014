@@ -43,4 +43,4 @@ RET
 | `CMD = 1`             | `OP1 = OP1 + OP2`               | `11         = 1+1+2+1+2+4`
 | `CMD > 1`             | `OP1 = OP1 - OP2`               | `10         = 1+1+1+2+1+4`
 
-Die maximale Laufzeit ist `10*(6*255) = 10*1530 = 15300` Takte, da OP2<sub>max</sub> = 255.
+Die maximale Laufzeit ist `10+(6*255) = 10+1530 = 1540` Takte, da OP2<sub>max</sub> = 255.
