@@ -36,7 +36,7 @@ RET
 
 #### Aufgabenteil 1
 
-![Flowchart](aufgabe6-flowchart.png)
+![Flowchart](aufgabe4-flowchart.png)
 
 | Bedingung | Operation                       |
 | --------- | ------------------------------- |
