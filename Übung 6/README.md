@@ -23,7 +23,7 @@ else
    R20=0;
 ```
 
-Erweitern Sie die Vorlage if_elseif_else.asm um die angegebene Funktionalität. Testen Sie Ihren Code und laden Sie die *kompilierbare* Lösung hoch.
+Erweitern Sie die Vorlage [if_elseif_else.asm](if_elseif_else\(korrigiert\).asm) um die angegebene Funktionalität. Testen Sie Ihren Code und laden Sie die *kompilierbare* Lösung hoch.
 
 ## Frage 4 (30 Punkte)
 
