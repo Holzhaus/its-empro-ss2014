@@ -44,3 +44,35 @@ RET
 | `CMD > 1`             | `OP1 = OP1 - OP2`               | `10         = 1+1+1+2+1+4`
 
 Die maximale Laufzeit ist `10+(6*255) = 10+1530 = 1540` Takte, da OP2<sub>max</sub> = 255.
+
+#### Aufgabenteil 3
+
+Wenn `CMD` kleiner als 1 und `OP2` größer als `OP1` ist, werden `OP1` und `OP2` immer Null. Für diesen Fall kann ein zusätzlicher Test eingebaut werden, der überflüssige Operationen vermeidet.
+```Assembly
+UNKNOWN_FUNCTION:
+START:
+CPI  CMD,$01
+BRLO  CMD1
+BREQ  CMD2
+RJMP  CMD3
+CMD1:
+CP  OP1,OP2              ; Vergleiche OP1 und OP2
+BRLO OP2_HIGHER_THAN_OP1 ; Wenn OP2 > OP1, springe
+Loop:
+CPI  OP2,0
+BREQ  ENDE
+LSR  OP1
+DEC  OP2
+RJMP  Loop
+OP2_HIGHER_THAN_OP1:     ; Da OP2 > OP1, setze beide auf 0
+LDI OP2,0
+LDI OP1,0
+RJMP  ENDE               ; Fertig!
+CMD2:
+ADD  OP1,OP2
+RJMP  ENDE
+CMD3:
+SUB  OP1,OP2
+ENDE:
+RET
+```
