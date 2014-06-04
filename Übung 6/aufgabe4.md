@@ -34,14 +34,12 @@ RET
 
 ### Lösung
 
-#### Aufgabenteil 1
-
 ![Flowchart](aufgabe4-flowchart.png)
 
-| Bedingung | Operation                       |
-| --------- | ------------------------------- |
-| `CMD < 1` | `OP1 = OP1 / (OP2*2) ; OP2 = 0` |
-| `CMD = 1` | `OP1 = OP1 + OP2`               |
-| `CMD > 1` | `OP1 = OP1 - OP2`               |
+| Bedingung | Operation                       | Taktzyklen
+| --------- | ------------------------------- | ----------
+| `CMD < 1` | `OP1 = OP1 / (OP2*2) ; OP2 = 0` | `10+(6*OP2) = 1+2+1+((1+1+1+2+1)*OP2)+2+4`
+| `CMD = 1` | `OP1 = OP1 + OP2`               | `11         = 1+1+2+1+2+4`
+| `CMD > 1` | `OP1 = OP1 - OP2`               | `10         = 1+1+1+2+1+4`
 
-Bei der Division wird immer abgerundet.
+Die maximale Laufzeit ist `10*(6*255) = 10*1530 = 15300` Takte, da OP2<sub>max</sub> = 255.
