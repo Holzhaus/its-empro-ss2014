@@ -22,9 +22,30 @@ set_R20:
 	;    R20=1;
 	; else
 	;    R20=0;
-	; TODO: Aufgabe lösen
-	
-	ret
+	cpi     R18,'V'
+	breq    if_R18_eq_V
+	cpi     R18,'Z'
+	breq    if_R18_eq_Z
+	cpi     R18,'L'
+	breq    if_R18_eq_L
+	cpi     R18,'R'
+	breq    if_R18_eq_R
+	; else
+	ldi     R20,0
+	endif:
+		ret
+	if_R18_eq_V:
+		ldi     R20,8
+		rjmp    endif
+	if_R18_eq_Z:
+		ldi     R20,4
+		rjmp    endif
+	if_R18_eq_L:
+		ldi     R20,2
+		rjmp    endif
+	if_R18_eq_R:
+		ldi     R20,1
+		rjmp    endif
 
 main:
 	;Initialisierung des Stack Pointers
