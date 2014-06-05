@@ -19,7 +19,7 @@
 ; Bitte ergänzen Sie das Programm in [u7_haus.asm](u7_haus.asm) und laden die Datei
 ; anschließend hoch:
 ; 
-: - Laden Sie die 10 Byte Input der S-Box aus dem Flash/Program Memory (Label
+; - Laden Sie die 10 Byte Input der S-Box aus dem Flash/Program Memory (Label
 ;   sbox_input) in den RAM (Label sbox_input_ram). (20 Punkte)
 ; - Wenden Sie die S-Box auf die 10 Byte Input Daten an, welche Sie zuvor in
 ;   den RAM geladen haben. Dabei soll der Input mit dem jeweiligen Output der
@@ -38,9 +38,9 @@
 
 .DSEG
 sbox_input_ram: 
-.BYTE  10  //Input Data für die S-Box
+.BYTE  10  ;Input Data für die S-Box
 sbox_in_ram: 
-.BYTE  256 //Platz um die S-Box in den RAM zu kopieren
+.BYTE  256 ;Platz um die S-Box in den RAM zu kopieren
 
 .CSEG
 
@@ -49,51 +49,140 @@ out SPH, r16
 ldi r16, LOW(RAMEND)  ; LOW-Byte der obersten RAM-Adresse
 out SPL, r16
 
-//Teil 1
+;Teil 1
 rcall copy_from_flash
-//Teil 2
+;Teil 2
 rcall eval_sbox_flash
-//Teil 3
+;Teil 3
 rcall copy_sbox
-//Teil 4
-rcall copy_from_flash //Eingangswerte wiederherstellen
+;Teil 4
+rcall copy_from_flash ;Eingangswerte wiederherstellen
 rcall eval_sbox_ram
 
 END:
 rjmp END
 
-//*********************************
+;********************************
+; Namen für Hilfsregister
+.DEF counter_l = R24
+.DEF counter_h = R25
+.DEF temp = R0
+.DEF zero = R1
+
+; Anzahl der SBOX-Input-Bytes
+.EQU num_input_bytes = 10
+
+; Counter-Makros
+.MACRO counter_init ; (Zahl)
+	LDI counter_l,LOW(@0)  ; Lade Anzahl der Loops in 
+	LDI counter_h,HIGH(@0)
+.ENDMACRO
+.MACRO counter_dec
+	SBIW counter_l,1 ; Decrementiert Counter, setzt Z-Flag wenn 0 (daher kein CPI notwendig)
+.ENDMACRO
+
+; Die eigentliche Flash-to-Ram-Kopierfunktion
+copy_flashbytes_to_ram:
+        ; Verwendung:
+        ;   1. Flash-Quelladresse in Pointer-Registerpaar Z laden
+        ;   2. SRAM-Zieladresse in Pointer-Registerpaar Y laden
+        ;   3. Counter initialisieren mittels counter_init <num>
+        ;   4. Funktion aufrufen mittels RCALL
+        ; [PERFORMANCE] Initialisierung, RCALL und RET: 13 Cycles
+        ; [PERFORMANCE] Funktion selbst: 1+8*n
+        ; [PERFORMANCE] Gesamt: 14+8*n
+	copy_flashbytes_to_ram_loop:     ; Starte Loop
+	LPM temp,Z+                      ; Lädt Daten aus Flash in Hilfsregister
+                                         ;  und erhöht Flash-Quelladresse danach um 1
+	ST Y+,temp                       ; Speichert Daten aus Hilfsregister im SRAM
+                                         ;  und erhöht SRAM-Zieladresse danach um 1
+	counter_dec                      ; Counter dekrementieren
+	BRNE copy_flashbytes_to_ram_loop ; Wenn Counter nicht 0 ist, wiederholen
+	ret                              ; Fertig!
+
+;*********************************
 copy_from_flash:
-//[Hier bitte Aufgabenteil 1 einfügen]
-
-ret
-
-
-
-//*********************************
+	LDI   ZL, LOW(sbox_input*2)      ; Flash-Quelladresse in Pointer-Registerpaar Z laden
+	LDI   ZH, HIGH(sbox_input*2)
+	LDI   YL, LOW(sbox_input_ram*2)  ; SRAM-Zieladresse in Pointer-Registerpaar Y laden
+	LDI   YH, HIGH(sbox_input_ram*2)
+        counter_init num_input_bytes     ; Counter initialisierem
+	RCALL copy_flashbytes_to_ram     ; Flash-to-RAM-Kopiervorgang starten
+	ret
+;*********************************
 eval_sbox_flash:
-//[Hier bitte Aufgabenteil 2 einfügen]
+	LDI  YL, LOW(sbox_input_ram*2)   ; SRAM-Quelladresse in Pointer-Registerpaar Y laden
+	LDI  YH, HIGH(sbox_input_ram*2)
+	LDI  XL, LOW(sbox*2)             ; Flash-Adresse der SBOX in Pointer-Registerpaar X laden
+	LDI  XH, HIGH(sbox*2)
+	; Ab hier wirds wieder spannend
+	CLR  zero                        ; 0-Register setzen
+	counter_init num_input_bytes     ; Counter initialisierem
+	eval_sbox_flash_loop:            ; Starte Loop...
+	LD   temp,Y                      ; Kopiere Input ins Hilfsregister
+	MOVW ZL,XL                       ; Kopiere Flash-Adresse der SBOX nach Z
+	ADD  ZL,temp                     ; Nutze SBOX-Input als Adressoffset für Z
+	ADC  ZH,zero
+	LPM  temp,Z                      ; Lade SBOX-Output aus Flash ins Hilfsregister
+	ST   Y+,temp                     ; Speichere SBOX-Output an Inputadresse und gehe zur Nächsten
+	counter_dec                      ; Counter dekrementieren
+	BRNE eval_sbox_flash_loop        ; Wenn Counter nicht 0 ist, wiederholen
+	ret                              ; Fertig!
+        ; [PERFORMANCE] Funktion benötigt 12+12*n Cycles
 
-ret
-
-
-
-//*********************************
+;*********************************
 copy_sbox:
-//[Hier bitte Aufgabenteil 3 einfügen]
+	LDI   ZL, LOW(sbox*2)            ; Flash-Quelladresse in Pointer-Registerpaar Z laden
+	LDI   ZH, HIGH(sbox*2)
+	LDI   YL, LOW(sbox_in_ram*2)     ; SRAM-Zieladresse in Pointer-Registerpaar Y laden
+	LDI   YH, HIGH(sbox_in_ram*2)
+        counter_init 256                 ; Counter initialisierem
+	RCALL copy_flashbytes_to_ram     ; Flash-to-RAM-Kopiervorgang starten
+	ret
 
-ret
-
-
-
-//*********************************
+;*********************************
 eval_sbox_ram:
-//[Hier bitte Aufgabenteil 4 einfügen]
+	; Diese Funktion ist fast identisch mit eval_sbox_flash
+        ;  Die beiden einzigen Unterschiede sind:
+        ;  1. Statt der Flash-Adresse wird die SRAM-Adresse der
+        ;     SBOX ins Register X geladen (Z. 163f)
+        ;  2. Statt LPM wird LD zum Laden des SBOX-Outputs ins
+        ;     Hilfsregister verwendet (Z. 174)
+	; Da der LPM-Befehl mit 3 Cycles langsamer ist als der
+        ; LD-Befehl (1 Cycle), ist die Auswertung der SRAM-SBOX
+        ; um n*2 Cycles schneller als die Flash-SBOX. Da sie
+        ; jedoch zunächst geladen werden muss, was zusätzlich
+        ; 7+14+8*256 = 2069 Cycles dauert (inkl. RCALL copy_sbox),
+        ; lohnt sich eine SRAM-SBOX erst ab 1035 Eingabewerten:
+        ;     2069+12+10*n = 12+12*n | -12
+        ; <=> 2069   +10*n =    12*n | -(10*n)
+        ; <=> 2069         =     2*n | :2
+        ; <=>            n =  1034.5
+	LDI  YL, LOW(sbox_input_ram*2)   ; SRAM-Quelladresse in Pointer-Registerpaar Y laden
+	LDI  YH, HIGH(sbox_input_ram*2)
+	LDI  XL, LOW(sbox_in_ram*2)      ; SRAM-Adresse der SBOX in Pointer-Registerpaar X laden
+	LDI  XH, HIGH(sbox_in_ram*2)
+	; Ab hier wirds wieder spannend
+	CLR  zero                        ; 0-Register setzen
+	counter_init num_input_bytes     ; Counter initialisierem
+        ; [PERFORMANCE] Bis hierhin 7 Cycles
+	eval_sbox_ram_loop:              ; Starte Loop...
+	LD   temp,Y                      ; Kopiere Input ins Hilfsregister
+	MOVW ZL,XL                       ; Kopiere SRAM-Adresse der SBOX nach Z
+	ADD  ZL,temp                     ; Nutze SBOX-Input als Adressoffset für Z
+	ADC  ZH,zero
+	LD   temp,Z                      ; Lade SBOX-Output aus SRAM ins Hilfsregister
+	ST   Y+,temp                     ; Speichere SBOX-Output an Inputadresse und gehe zur Nächsten
+	counter_dec                      ; Counter dekrementieren
+        ; [PERFORMANCE] Bis hierhin 7+9*n Cycles
+	BRNE eval_sbox_ram_loop          ; Wenn Counter nicht 0 ist, wiederholen
+        ; [PERFORMANCE] Bis hierhin 8+10*n Cycles
+	ret                              ; Fertig!
+        ; [PERFORMANCE] Funktion benötigt 12+10*n Cycles
 
-ret
-
-
-.ORG 1024
+;.ORG 1024 ; Musste ich auskommentieren, da entweder mein Compiler
+           ; (avra) oder mein Simulator (simavr) sonst irgendwelche
+           ; Datensegmente ausführen will
 
 sbox_input:
 .db 0x02, 0x00, 0xC6, 0x11, 0x7F, 0xC1, 0x8A, 0xD4, 0x37, 0x46
