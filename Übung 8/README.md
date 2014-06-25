@@ -1,4 +1,11 @@
 # Übung 8
+
+Die zwei Gruppenaufgaben sind explizit als Gruppenaufgaben gekennzeichnet. Alle anderen Aufgaben sind Einzelaufgaben.
+
+Bitte beachten: Für die Lösung von Aufgabe 5 gibt aufgrund des Umfangs der Übung Sonderpunkte. Die Aufgabe ist aber trotzdem klausurrelevant.
+
+Die Gruppennummer ist die Asuronummer (steht auf dem Karton). Falls keine Gruppennummer bekannt ist, kann auch die Summe der letzten beiden Ziffern der Matrikelnummern der Gruppenmitglieder modulo 100 als Gruppennummer verwendet werden.
+
 ## Frage 1 (5 Punkte)
 
 Warum gibt es im EEPROM Kontrollregister EECR zwei Steuerbits (EEMWE, EEWE) zum Schreiben, und nur eines zum Lesen (EERE)?
