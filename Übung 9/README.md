@@ -1,18 +1,18 @@
 # Übung 9
-# Frage 1 (5 Punkte)
+## Frage 1 (5 Punkte)
 
 *Einzelaufgabe:*
 
 Nehmen Sie an, dass die Interrupts aktiviert und korrekt konfiguriert wurden. Jetzt werden der Interrupt "EE_RDY" und der Interrupt "INT1" gleichzeitig ausgelöst, während der ATMega einen beliebigen Befehl bearbeitet. An welcher Adresse liegt der Interrupthandler, an den nach Abarbeitung des Befehls gesprungen wird. Antwort bitte als Hexzahl (Format wie im AVR Datasheet, z.B. 0x010).
 
 
-# Frage 2 (10 Punkte)
+## Frage 2 (10 Punkte)
 
 *Einzelaufgabe:*
 
-Wenn in Assembler eine Funktion angesprungen (`RCALL`) wird ist es nicht in allen Fällen notwendig, dass Statusregister (`SREG`) zu sichern. Erklären Sie, warum manchmal auf das Sichern des Statusregisters bei durch rcall aufgerufenen Funktionen verzichtet werden kann [max. zwei Sätze]. Warum muss in der Regel das Statusregister in einer Interruptserviceroutine immer gesichert werden? Geben Sie ein Beispiel an, in dem sich ein Programm, abhängig davon wann ein Interrupt ausgelöst wird, anders verhält.
+Wenn in Assembler eine Funktion angesprungen (`RCALL`) wird ist es nicht in allen Fällen notwendig, dass Statusregister (`SREG`) zu sichern. Erklären Sie, warum manchmal auf das Sichern des Statusregisters bei durch rcall aufgerufenen Funktionen verzichtet werden kann (max. zwei Sätze). Warum muss in der Regel das Statusregister in einer Interruptserviceroutine immer gesichert werden? Geben Sie ein Beispiel an, in dem sich ein Programm, abhängig davon wann ein Interrupt ausgelöst wird, anders verhält.
 
-# Frage 3 (30 Punkte)
+## Frage 3 (30 Punkte)
 
 *Einzelaufgabe:*
 
@@ -23,7 +23,7 @@ Bitte beantworten Sie kurz die folgenden Fragen. Sie benötigen hierfür das AVR
 - In einer Interruptserviceroutine wird durch Deaktivierung des I-Flags im Statusregister (SREG) die Auslösung weiterer Interrupts automatisch abgeschaltet. Nehmen Sie an, Sie konﬁgurieren einen der externen Interrupts INT0/INT1 so, dass er bei einer anliegenden Null am externen Pin ausgelöst wird. Sie reaktivieren außerdem in Ihrer zugehörigen Interruptsserviceroutine (ISR) manuell das I-Flag im SREG, um andere, verschachtelte Interrupts zuzulassen. Eine externe Signalquelle (z.B. ein Taster) setzt nun den Pin Ihres externen Interrupts für den Zeitraum von 2 Sekunden auf logisch Null. Was wird nun im ATMega8 passieren? Mit welchem Fehler müssen Sie rechnen?
 - Das General Interrupt Control Register hat noch (eine) weitere Funktion(en), als nur die externen Interrupts INT0 und INT1 zu aktivieren. Welche?
 
-# Frage 4 (55 Punkte)
+## Frage 4 (55 Punkte)
 
 *Gruppenaufgabe:*
  
