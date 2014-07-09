@@ -60,4 +60,4 @@ OUT ICR1H,R16 ; Wiederherstellen des TEMP-Registers (kopiert R16 nach TEMP)
 
 #### Teilaufgabe c)
 
-TODO
+Timer0 und Timer1 das nutzen das selbe Prescaler-Modul. Daher wird auch der Prescaler-Counter von Timer0 resettet, wenn der Prescaler von Timer1 resettet wird, sodass sich einmalig die Dauer bis zum Auslösen des Interrupts verändert. Der Prescaler-Clock (8,64,256,1024) des Timer0 selbst bleibt dabei unberührt.
