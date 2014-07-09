@@ -2,6 +2,7 @@
 *.eep
 *.elf
 *.cof
+*.obj
 *.hex
 *.lss
 *.lst
