@@ -1,9 +1,11 @@
 *.d
 *.eep
 *.elf
+*.cof
 *.hex
 *.lss
 *.lst
 *.map
 *.o
 *~
+AsuroFl.ini
