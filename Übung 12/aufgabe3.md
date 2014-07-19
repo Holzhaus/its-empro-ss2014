@@ -33,5 +33,14 @@ Bauteile:
                &= \frac{3}{1001000} s\\
                &\approx 2.997 \cdot 10^{-6} s\\
                &\approx 2.997 \mu s
+f &= 8 \cdot 10^{6} Hz\\
+i_1 &= 3 \cdot \tau_1 \cdot f\\
+    &= 3 \cdot 10^{-3} s \cdot 8 \cdot 10^6 Hz\\
+    &= 24 \cdot 10^{3}\\
+    &= 24\,000\\
+i_2 &= 3 \cdot \tau_2 \cdot f\\
+    &= \frac{3}{1001000} s \cdot 8 \cdot 10^6 Hz\\
+    &= \frac{24 \cdot 10^3}{1,001 \cdot 10^3}\\
+    &\approx 23,98\\
 \end{align*}
 ```
