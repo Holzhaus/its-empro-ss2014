@@ -32,7 +32,7 @@ Bauteile:
                &= 3 \cdot (\frac{1}{1001000} s)\\
                &= \frac{3}{1001000} s\\
                &\approx 2.997 \cdot 10^{-6} s\\
-               &\approx 2.997 \mu s
+               &\approx 2.997 \mu s\\
 f &= 8 \cdot 10^{6} Hz\\
 i_1 &= 3 \cdot \tau_1 \cdot f\\
     &= 3 \cdot 10^{-3} s \cdot 8 \cdot 10^6 Hz\\
