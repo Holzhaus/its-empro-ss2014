@@ -1,5 +1,7 @@
 # Übungen zur Vorlesung "Eingebettete Prozessoren" (Sommersemester 2014)
 
+*Disclaimer:* Mit diesen Lösungen gabs 560 von 600 möglichen Punkten, d.h. das Meiste ist richtig, Einiges aber auch falsch. Alle Angaben ohne Gewähr.
+
 ## C-Programme kompilieren und flashen:
 
 - Zunächst unter ArchLinux das [`asuro-flashtool` aus dem AUR ](https://aur.archlinux.org/packages/asuro-flashtool/) installieren
